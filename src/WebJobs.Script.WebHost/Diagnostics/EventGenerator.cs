@@ -35,9 +35,9 @@ namespace Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics
             }
         }
 
-        public void LogFunctionMetricEvent(string subscriptionId, string appName, string eventName, long average, long minimum, long maximum, long count, DateTime eventTimestamp)
+        public void LogFunctionMetricEvent(string subscriptionId, string appName, string functionName, string eventName, long average, long minimum, long maximum, long count, DateTime eventTimestamp)
         {
-            FunctionsEventSource.Instance.LogFunctionMetricEvent(subscriptionId, appName, eventName, average, minimum, maximum, count, ScriptHost.Version, eventTimestamp.ToString(EventTimestamp));
+            FunctionsEventSource.Instance.LogFunctionMetricEvent(subscriptionId, appName, functionName, eventName, average, minimum, maximum, count, ScriptHost.Version, eventTimestamp.ToString(EventTimestamp));
         }
 
         public void LogFunctionExecutionAggregateEvent(string siteName, string functionName, long executionTimeInMs, long functionStartedCount, long functionCompletedCount, long functionFailedCount)
@@ -124,11 +124,11 @@ namespace Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics
             }
 
             [Event(65524, Level = EventLevel.Informational, Channel = EventChannel.Operational)]
-            public void LogFunctionMetricEvent(string subscriptionId, string appName, string eventName, long average, long minimum, long maximum, long count, string hostVersion, string eventTimestamp)
+            public void LogFunctionMetricEvent(string subscriptionId, string appName, string functionName, string eventName, long average, long minimum, long maximum, long count, string hostVersion, string eventTimestamp)
             {
                 if (IsEnabled())
                 {
-                    WriteEvent(65524, subscriptionId, appName, eventName, average, minimum, maximum, count, hostVersion, eventTimestamp);
+                    WriteEvent(65524, subscriptionId, appName, functionName, eventName, average, minimum, maximum, count, hostVersion, eventTimestamp);
                 }
             }
         }
